@@ -16,6 +16,13 @@ const ogImage = {
   alt: `Foto do ${eventInfo.childName} — ${eventInfo.title}`,
 };
 
+const ogImageConvite = {
+  url: eventInfo.conviteImage,
+  width: 790,
+  height: 790,
+  alt: `Convite digital — ${eventInfo.title}`,
+};
+
 /** Metadados Open Graph compartilhados (WhatsApp, iMessage, etc.). */
 export const sharedOpenGraph = {
   type: "website" as const,
@@ -57,20 +64,21 @@ export function getConfirmarMetadata(): Metadata {
       title: `🎉 Você está convidado — ${eventInfo.title}`,
       description: `Confirme sua presença! ${eventInfo.date} às ${eventInfo.time} · Guarulhos-SP`,
       url: "/confirmar",
+      images: [ogImageConvite],
     },
     twitter: {
       card: "summary_large_image",
       title: `Convite — ${eventInfo.title}`,
       description: "Confirme sua presença na festa!",
-      images: [ogImage.url],
+      images: [ogImageConvite.url],
     },
   };
 }
 
-/** URL absoluta da foto do Liam para preview no WhatsApp. */
+/** URL absoluta da imagem do convite para preview no WhatsApp. */
 export function getPhotoUrl(origin?: string): string {
   const base = (origin ?? getSiteUrl()).replace(/\/$/, "");
-  return `${base}${eventInfo.photo}`;
+  return `${base}${eventInfo.conviteImage}`;
 }
 
 /** Texto formatado para colar no WhatsApp junto com o link. */

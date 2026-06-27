@@ -23,6 +23,8 @@ export const eventInfo = {
   },
   whatsappGroupUrl: "#", // Substituir pelo link real do grupo
   photo: "/images/liam.jpg",
+  /** Imagem do convite digital — preview no WhatsApp e mensagem de envio. */
+  conviteImage: "/images/preview.png",
 } as const;
 
 export const colors = {
