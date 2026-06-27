@@ -67,10 +67,23 @@ export function getConfirmarMetadata(): Metadata {
   };
 }
 
+/** URL absoluta da foto do Liam para preview no WhatsApp. */
+export function getPhotoUrl(origin?: string): string {
+  const base = (origin ?? getSiteUrl()).replace(/\/$/, "");
+  return `${base}${eventInfo.photo}`;
+}
+
 /** Texto formatado para colar no WhatsApp junto com o link. */
-export function buildWhatsAppConviteMessage(link: string): string {
+export function buildWhatsAppConviteMessage(
+  link: string,
+  origin?: string,
+): string {
+  const photoUrl = getPhotoUrl(origin);
+
   return [
     `🎉 *${eventInfo.title}*`,
+    "",
+    photoUrl,
     "",
     "Você está convidado(a) para celebrar conosco!",
     "",
@@ -84,8 +97,12 @@ export function buildWhatsAppConviteMessage(link: string): string {
 }
 
 /** Link direto para abrir WhatsApp com a mensagem pré-preenchida. */
-export function buildWhatsAppShareUrl(link: string, phone?: string): string {
-  const text = encodeURIComponent(buildWhatsAppConviteMessage(link));
+export function buildWhatsAppShareUrl(
+  link: string,
+  phone?: string,
+  origin?: string,
+): string {
+  const text = encodeURIComponent(buildWhatsAppConviteMessage(link, origin));
   if (phone) {
     return `https://wa.me/${phone.replace(/\D/g, "")}?text=${text}`;
   }

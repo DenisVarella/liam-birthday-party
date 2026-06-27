@@ -35,8 +35,9 @@ function CopiarLinkButton({ familiaId }: { familiaId: string }) {
   const [copied, setCopied] = useState(false);
 
   async function copiar() {
-    const link = buildLinkConfirmacao(familiaId, window.location.origin);
-    const texto = buildWhatsAppConviteMessage(link);
+    const origin = window.location.origin;
+    const link = buildLinkConfirmacao(familiaId, origin);
+    const texto = buildWhatsAppConviteMessage(link, origin);
     await navigator.clipboard.writeText(texto);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
