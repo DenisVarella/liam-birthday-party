@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="#f7f6f3"/>
+  <circle cx="16" cy="13.5" r="9.5" fill="url(#balloon)" />
+  <ellipse cx="12.5" cy="10.5" rx="2.2" ry="2.8" fill="#ffffff" fill-opacity="0.4" />
+  <path
+    d="M16 23.2c0 0 1.2 1.8 0 3.6M16 23.2c0 0-1.2 1.8 0 3.6"
+    stroke="#2c5282"
+    stroke-width="1.1"
+    stroke-linecap="round"
+    stroke-opacity="0.35"
+  />
+  <line
+    x1="16"
+    y1="23"
+    x2="16"
+    y2="27"
+    stroke="#2c5282"
+    stroke-width="1.2"
+    stroke-linecap="round"
+    stroke-opacity="0.5"
+  />
+  <circle cx="16" cy="27.6" r="0.9" fill="#e8914a" />
+  <defs>
+    <linearGradient id="balloon" x1="10" y1="5" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7eb8e0" />
+      <stop offset="1" stop-color="#4a90c4" />
+    </linearGradient>
+  </defs>
+</svg>

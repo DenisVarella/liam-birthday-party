@@ -204,7 +204,6 @@ export function ConfirmarPresenca() {
                       onChange={(e) => setMensagem(e.target.value)}
                       rows={3}
                       maxLength={500}
-                      placeholder="Ex.: Mal podemos esperar para celebrar!"
                       className="w-full resize-none rounded-xl border border-panel bg-cream/80 px-4 py-3 text-sm text-foreground outline-none transition-colors focus:border-blue focus:ring-2 focus:ring-blue/20"
                     />
                   </div>
