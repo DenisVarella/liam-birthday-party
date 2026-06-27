@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fredoka, Nunito, Pacifico } from "next/font/google";
+import { getHomeMetadata } from "@/lib/site-metadata";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -20,17 +21,7 @@ const pacifico = Pacifico({
   weight: ["400"],
 });
 
-export const metadata: Metadata = {
-  title: "1º Aninho do Liam — 16 de agosto de 2026",
-  description:
-    "Venha comemorar o 1º aninho do Liam! Festa no Condomínio Class, Guarulhos-SP — 16/08/2026 às 14h.",
-  openGraph: {
-    title: "1º Aninho do Liam",
-    description: "Venha comemorar esse dia especial!",
-    type: "website",
-    locale: "pt_BR",
-  },
-};
+export const metadata: Metadata = getHomeMetadata();
 
 export default function RootLayout({
   children,
@@ -42,7 +33,7 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${nunito.variable} ${fredoka.variable} ${pacifico.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col bg-transparent">{children}</body>
     </html>
   );
 }

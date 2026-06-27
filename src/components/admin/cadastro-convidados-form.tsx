@@ -7,6 +7,7 @@ import {
   listarFamilias,
 } from "@/lib/convidados-service";
 import { buildLinkConfirmacao } from "@/lib/admin-route";
+import { buildWhatsAppConviteMessage } from "@/lib/site-metadata";
 import type { FamiliaConvidada, RespostaStatus } from "@/lib/types/convidados";
 
 function StatusBadge({ status }: { status: RespostaStatus }) {
@@ -35,9 +36,10 @@ function CopiarLinkButton({ familiaId }: { familiaId: string }) {
 
   async function copiar() {
     const link = buildLinkConfirmacao(familiaId, window.location.origin);
-    await navigator.clipboard.writeText(link);
+    const texto = buildWhatsAppConviteMessage(link);
+    await navigator.clipboard.writeText(texto);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 2500);
   }
 
   return (
@@ -54,7 +56,7 @@ function CopiarLinkButton({ familiaId }: { familiaId: string }) {
       ) : (
         <>
           <Copy className="h-3.5 w-3.5" />
-          Copiar link WhatsApp
+          Copiar convite WhatsApp
         </>
       )}
     </button>

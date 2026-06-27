@@ -7,13 +7,16 @@ import { MenuSection } from "@/components/menu-section";
 import { EntertainmentSection } from "@/components/entertainment-section";
 import { ShareSection } from "@/components/share-section";
 import { Footer } from "@/components/footer";
+import { BalloonBackground, PageDecorBackground } from "@/components/ui/invitation-decor";
 
 /** Landing page do 1º Aninho do Liam. */
 export default function Home() {
   return (
     <>
+      <PageDecorBackground />
+      <BalloonBackground />
       <Header />
-      <main>
+      <main className="relative z-10 bg-transparent">
         <Hero />
         <PhotoGallery />
         <EventDetails />
@@ -22,7 +25,7 @@ export default function Home() {
         <EntertainmentSection />
         <ShareSection />
       </main>
-      <Footer />
+      <Footer className="relative z-10" />
     </>
   );
 }

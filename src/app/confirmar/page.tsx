@@ -1,17 +1,17 @@
 import { Suspense } from "react";
-import type { Metadata } from "next";
 import { Loader2 } from "lucide-react";
 import { ConfirmarPresenca } from "@/components/confirmar-presenca";
+import {
+  BalloonBackground,
+  PageDecorBackground,
+} from "@/components/ui/invitation-decor";
+import { getConfirmarMetadata } from "@/lib/site-metadata";
 
-export const metadata: Metadata = {
-  title: "Confirmar presença — 1º Aninho do Liam",
-  description: "Confirme sua presença na festa do Liam.",
-  robots: { index: false, follow: false },
-};
+export const metadata = getConfirmarMetadata();
 
 function LoadingFallback() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-cream">
+    <div className="relative z-10 flex min-h-screen items-center justify-center">
       <Loader2 className="h-8 w-8 animate-spin text-blue" />
     </div>
   );
@@ -20,8 +20,12 @@ function LoadingFallback() {
 /** Link único por família: /confirmar?f=ID_DO_DOCUMENTO */
 export default function ConfirmarPage() {
   return (
-    <Suspense fallback={<LoadingFallback />}>
-      <ConfirmarPresenca />
-    </Suspense>
+    <>
+      <PageDecorBackground />
+      <BalloonBackground />
+      <Suspense fallback={<LoadingFallback />}>
+        <ConfirmarPresenca />
+      </Suspense>
+    </>
   );
 }

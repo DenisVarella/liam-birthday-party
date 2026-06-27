@@ -6,7 +6,6 @@ import { eventInfo } from "@/lib/event-data";
 import { Countdown } from "@/components/countdown";
 import { FadeIn } from "@/components/ui/fade-in";
 import {
-  BalloonDecor,
   RibbonBanner,
   StitchedHeart,
 } from "@/components/ui/invitation-decor";
@@ -16,10 +15,8 @@ export function Hero() {
   return (
     <section
       id="inicio"
-      className="panel-bg confetti-bg relative flex min-h-screen items-center overflow-hidden pt-20"
+      className="relative flex min-h-screen items-center overflow-hidden pt-20"
     >
-      <BalloonDecor />
-
       <div className="relative mx-auto w-full max-w-4xl px-4 py-12 text-center sm:px-6 sm:py-16">
         {/* Título estilo convite: 1º ANINHO DO Liam */}
         <FadeIn>

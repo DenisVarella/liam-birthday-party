@@ -8,7 +8,7 @@ import { RibbonBanner } from "@/components/ui/invitation-decor";
 /** Seção de compartilhamento de fotos via QR Code / WhatsApp. */
 export function ShareSection() {
   return (
-    <section id="fotos" className="confetti-bg py-20 sm:py-28">
+    <section id="fotos" className="py-20 sm:py-28">
       <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
         <FadeIn>
           <SectionHeading

@@ -89,7 +89,7 @@ export function ConfirmarPresenca() {
   }
 
   return (
-    <div className="panel-bg confetti-bg min-h-screen px-4 py-10 sm:px-6">
+    <div className="relative z-10 min-h-screen px-4 py-10 sm:px-6">
       <div className="mx-auto max-w-md">
         <header className="mb-8 text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-sm font-semibold text-orange shadow-sm">
@@ -187,6 +187,27 @@ export function ConfirmarPresenca() {
                     Venha comemorar conosco, adoraríamos ter você nesse
                     dia tão especial!
                   </p>
+
+                  <div className="mb-5 text-left">
+                    <label
+                      htmlFor="mensagem"
+                      className="mb-2 block text-sm font-semibold text-foreground"
+                    >
+                      Quer deixar uma mensagem?{" "}
+                      <span className="font-normal text-foreground/50">
+                        (opcional)
+                      </span>
+                    </label>
+                    <textarea
+                      id="mensagem"
+                      value={mensagem}
+                      onChange={(e) => setMensagem(e.target.value)}
+                      rows={3}
+                      maxLength={500}
+                      placeholder="Ex.: Mal podemos esperar para celebrar!"
+                      className="w-full resize-none rounded-xl border border-panel bg-cream/80 px-4 py-3 text-sm text-foreground outline-none transition-colors focus:border-blue focus:ring-2 focus:ring-blue/20"
+                    />
+                  </div>
 
                   {error && (
                     <p className="mb-4 text-sm font-medium text-coral">
