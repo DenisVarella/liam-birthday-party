@@ -7,12 +7,14 @@ import { MenuSection } from "@/components/menu-section";
 import { EntertainmentSection } from "@/components/entertainment-section";
 import { ShareSection } from "@/components/share-section";
 import { Footer } from "@/components/footer";
+import { BackgroundMusic } from "@/components/background-music";
 import { BalloonBackground, PageDecorBackground } from "@/components/ui/invitation-decor";
 
 /** Landing page do 1º Aninho do Liam. */
 export default function Home() {
   return (
     <>
+      <BackgroundMusic />
       <PageDecorBackground />
       <BalloonBackground />
       <Header />

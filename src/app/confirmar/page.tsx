@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { Loader2 } from "lucide-react";
+import { BackgroundMusic } from "@/components/background-music";
 import { ConfirmarPresenca } from "@/components/confirmar-presenca";
 import {
   BalloonBackground,
@@ -21,6 +22,7 @@ function LoadingFallback() {
 export default function ConfirmarPage() {
   return (
     <>
+      <BackgroundMusic />
       <PageDecorBackground />
       <BalloonBackground />
       <Suspense fallback={<LoadingFallback />}>

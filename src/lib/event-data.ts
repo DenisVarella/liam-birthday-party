@@ -122,3 +122,9 @@ export const developmentPhotos = [
   { label: "6 meses", emoji: "😄" },
   { label: "9 meses", emoji: "🧒", image: "/images/liam.jpg" },
 ] as const;
+
+/** Trilha sonora da landing — embed YouTube (sem vídeo visível). */
+export const partyMusic = {
+  youtubeVideoId: "bSC4loy2-3o",
+  title: "Bebezinho Bebezinho",
+} as const;
