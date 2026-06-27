@@ -1,0 +1,15 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Cadastro temporário de convidados — protegido apenas por rota oculta
+    // TODO: restringir com Auth ou Cloud Functions antes do evento ir ao ar
+    match /convidados/{familiaId} {
+      allow read, write: if true;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

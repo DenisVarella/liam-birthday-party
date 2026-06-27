@@ -1,0 +1,111 @@
+[debug] [2026-06-26T02:20:06.291Z] ----------------------------------------------------------------------
+[debug] [2026-06-26T02:20:06.293Z] Command:       /Users/denisvarella/.nvm/versions/node/v24.11.0/bin/node /Users/denisvarella/Projetos/liam-birthday-party/node_modules/.bin/firebase deploy
+[debug] [2026-06-26T02:20:06.293Z] CLI Version:   15.22.3
+[debug] [2026-06-26T02:20:06.293Z] Platform:      darwin
+[debug] [2026-06-26T02:20:06.293Z] Node Version:  v24.11.0
+[debug] [2026-06-26T02:20:06.293Z] Detected Agent: unknown
+[debug] [2026-06-26T02:20:06.293Z] Time:          Thu Jun 25 2026 23:20:06 GMT-0300 (Brasilia Standard Time)
+[debug] [2026-06-26T02:20:06.293Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-26T02:20:06.294Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-06-26T02:20:07.147Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-26T02:20:07.147Z] > authorizing via signed-in user (admin@pharosit.com.br)
+[debug] [2026-06-26T02:20:07.147Z] [iam] checking project liam-birthday-party for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-06-26T02:20:07.147Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:07.147Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:07.148Z] > refreshing access token with scopes: []
+[debug] [2026-06-26T02:20:07.148Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-26T02:20:07.148Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:09.029Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2026-06-26T02:20:09.029Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2026-06-26T02:20:09.177Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2026-06-26T02:20:09.178Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:09.178Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/liam-birthday-party:testIamPermissions [none]
+[debug] [2026-06-26T02:20:09.178Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/liam-birthday-party:testIamPermissions  x-goog-user-project=liam-birthday-party
+[debug] [2026-06-26T02:20:09.178Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/liam-birthday-party:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-26T02:20:09.608Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/liam-birthday-party:testIamPermissions 401
+[debug] [2026-06-26T02:20:09.608Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/liam-birthday-party:testIamPermissions {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"ACCESS_TOKEN_TYPE_UNSUPPORTED","metadata":{"method":"google.cloudresourcemanager.v1.Projects.TestIamPermissions","service":"cloudresourcemanager.googleapis.com"}}]}}
+[debug] [2026-06-26T02:20:09.609Z] Got a 401 Unauthenticated error for a call that required authentication. Refreshing tokens.
+[debug] [2026-06-26T02:20:09.609Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:09.609Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:09.609Z] > refreshing access token with scopes: []
+[debug] [2026-06-26T02:20:09.609Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-26T02:20:09.609Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:09.789Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2026-06-26T02:20:09.789Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:09.790Z] [iam] error while checking permissions, command may fail: Request to https://cloudresourcemanager.googleapis.com/v1/projects/liam-birthday-party:testIamPermissions had HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[debug] [2026-06-26T02:20:09.790Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:09.790Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:09.790Z] > refreshing access token with scopes: []
+[debug] [2026-06-26T02:20:09.791Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-26T02:20:09.791Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:09.969Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2026-06-26T02:20:09.969Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:09.970Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/liam-birthday-party [none]
+[debug] [2026-06-26T02:20:10.273Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/liam-birthday-party 401
+[debug] [2026-06-26T02:20:10.274Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/liam-birthday-party {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"}}
+[debug] [2026-06-26T02:20:10.274Z] Got a 401 Unauthenticated error for a call that required authentication. Refreshing tokens.
+[debug] [2026-06-26T02:20:10.274Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:10.274Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:10.274Z] > refreshing access token with scopes: []
+[debug] [2026-06-26T02:20:10.275Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-26T02:20:10.275Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:10.439Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2026-06-26T02:20:10.439Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:10.439Z] Request to https://firebase.googleapis.com/v1beta1/projects/liam-birthday-party had HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[error] 
+[error] Error: Assertion failed: resolving hosting target of a site with no site name or target name. This should have caused an error earlier
+[debug] [2026-06-26T02:20:33.952Z] ----------------------------------------------------------------------
+[debug] [2026-06-26T02:20:33.953Z] Command:       /Users/denisvarella/.nvm/versions/node/v24.11.0/bin/node /Users/denisvarella/Projetos/liam-birthday-party/node_modules/.bin/firebase deploy --only hosting
+[debug] [2026-06-26T02:20:33.953Z] CLI Version:   15.22.3
+[debug] [2026-06-26T02:20:33.953Z] Platform:      darwin
+[debug] [2026-06-26T02:20:33.953Z] Node Version:  v24.11.0
+[debug] [2026-06-26T02:20:33.953Z] Detected Agent: unknown
+[debug] [2026-06-26T02:20:33.953Z] Time:          Thu Jun 25 2026 23:20:33 GMT-0300 (Brasilia Standard Time)
+[debug] [2026-06-26T02:20:33.953Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-26T02:20:34.678Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-26T02:20:34.679Z] > authorizing via signed-in user (admin@pharosit.com.br)
+[debug] [2026-06-26T02:20:34.679Z] [iam] checking project liam-birthday-party for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-06-26T02:20:34.679Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:34.679Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:34.679Z] > refreshing access token with scopes: []
+[debug] [2026-06-26T02:20:34.680Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-26T02:20:34.680Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:36.958Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2026-06-26T02:20:36.958Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:36.958Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/liam-birthday-party:testIamPermissions [none]
+[debug] [2026-06-26T02:20:36.958Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/liam-birthday-party:testIamPermissions  x-goog-user-project=liam-birthday-party
+[debug] [2026-06-26T02:20:36.958Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/liam-birthday-party:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-26T02:20:37.416Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/liam-birthday-party:testIamPermissions 401
+[debug] [2026-06-26T02:20:37.416Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/liam-birthday-party:testIamPermissions {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"ACCESS_TOKEN_TYPE_UNSUPPORTED","metadata":{"method":"google.cloudresourcemanager.v1.Projects.TestIamPermissions","service":"cloudresourcemanager.googleapis.com"}}]}}
+[debug] [2026-06-26T02:20:37.416Z] Got a 401 Unauthenticated error for a call that required authentication. Refreshing tokens.
+[debug] [2026-06-26T02:20:37.416Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:37.416Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:37.416Z] > refreshing access token with scopes: []
+[debug] [2026-06-26T02:20:37.417Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-26T02:20:37.417Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:37.781Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2026-06-26T02:20:37.781Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:37.783Z] [iam] error while checking permissions, command may fail: Request to https://cloudresourcemanager.googleapis.com/v1/projects/liam-birthday-party:testIamPermissions had HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[debug] [2026-06-26T02:20:37.784Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:37.784Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:37.785Z] > refreshing access token with scopes: []
+[debug] [2026-06-26T02:20:37.785Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-26T02:20:37.785Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:37.875Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2026-06-26T02:20:37.876Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:37.876Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/liam-birthday-party [none]
+[debug] [2026-06-26T02:20:38.674Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/liam-birthday-party 401
+[debug] [2026-06-26T02:20:38.674Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/liam-birthday-party {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"}}
+[debug] [2026-06-26T02:20:38.675Z] Got a 401 Unauthenticated error for a call that required authentication. Refreshing tokens.
+[debug] [2026-06-26T02:20:38.675Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:38.675Z] Checked if tokens are valid: false, expires at: 1724770991237
+[debug] [2026-06-26T02:20:38.675Z] > refreshing access token with scopes: []
+[debug] [2026-06-26T02:20:38.675Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-26T02:20:38.675Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:38.820Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2026-06-26T02:20:38.820Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-26T02:20:38.821Z] Request to https://firebase.googleapis.com/v1beta1/projects/liam-birthday-party had HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[error] 
+[error] Error: Assertion failed: resolving hosting target of a site with no site name or target name. This should have caused an error earlier

@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f6f3;
+  --foreground: #2c5282;
+  --blue: #4a90c4;
+  --blue-light: #7eb8e0;
+  --blue-soft: #e8f4fc;
+  --teal: #3db8b0;
+  --teal-light: #a8e6e1;
+  --orange: #e8914a;
+  --orange-light: #fbd5a8;
+  --coral: #e85d5d;
+  --coral-light: #fcd5d5;
+  --cream: #f7f6f3;
+  --panel: #eceae6;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-blue: var(--blue);
+  --color-blue-light: var(--blue-light);
+  --color-blue-soft: var(--blue-soft);
+  --color-teal: var(--teal);
+  --color-teal-light: var(--teal-light);
+  --color-orange: var(--orange);
+  --color-orange-light: var(--orange-light);
+  --color-coral: var(--coral);
+  --color-coral-light: var(--coral-light);
+  --color-cream: var(--cream);
+  --color-panel: var(--panel);
+  --font-sans: var(--font-nunito);
+  --font-display: var(--font-fredoka);
+  --font-script: var(--font-pacifico);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-nunito), system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--coral) 30%, white);
+  color: var(--foreground);
+}
+
+/* Painel decorativo inspirado no convite */
+.panel-bg {
+  background-color: var(--background);
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent calc(25% - 1px),
+      color-mix(in srgb, var(--panel) 80%, transparent) calc(25% - 1px),
+      color-mix(in srgb, var(--panel) 80%, transparent) 25%
+    );
+}
+
+/* Confetes espalhados */
+.confetti-bg {
+  background-image:
+    radial-gradient(circle at 8% 12%, var(--orange) 2px, transparent 2px),
+    radial-gradient(circle at 22% 35%, var(--teal) 2px, transparent 2px),
+    radial-gradient(circle at 45% 8%, var(--coral) 2px, transparent 2px),
+    radial-gradient(circle at 68% 22%, var(--blue) 2px, transparent 2px),
+    radial-gradient(circle at 85% 45%, var(--orange) 2px, transparent 2px),
+    radial-gradient(circle at 12% 68%, var(--teal) 2px, transparent 2px),
+    radial-gradient(circle at 55% 78%, var(--coral) 2px, transparent 2px),
+    radial-gradient(circle at 78% 88%, var(--blue) 2px, transparent 2px),
+    radial-gradient(circle at 92% 15%, var(--teal) 2px, transparent 2px),
+    radial-gradient(circle at 35% 55%, var(--orange) 2px, transparent 2px);
+  background-size: 100% 100%;
+}
+
+/* Borda circular estilo "costura" do convite */
+.stitched-circle {
+  border: 3px dashed var(--blue);
+  border-radius: 50%;
+}
+
+/* Fita/ribbon do convite */
+.ribbon-banner {
+  position: relative;
+  background: linear-gradient(135deg, var(--blue-light), var(--blue));
+  color: white;
+  padding: 0.75rem 2rem;
+  clip-path: polygon(0 0, 100% 0, 96% 50%, 100% 100%, 0 100%, 4% 50%);
+}
+
+/* Polaroid estilo convite */
+.polaroid {
+  background: white;
+  padding: 0.75rem 0.75rem 2.5rem;
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.08),
+    0 2px 4px -2px rgb(0 0 0 / 0.06);
+  transform: rotate(var(--rotate, 0deg));
+}
+
+.polaroid-caption {
+  font-family: var(--font-script), cursive;
+  color: var(--blue);
+}
+
+/* Washi tape no topo da polaroid */
+.washi-tape {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(var(--tape-rotate, -2deg));
+  width: 60px;
+  height: 18px;
+  opacity: 0.85;
+  border-radius: 2px;
+}
+
+.washi-teal {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--teal),
+    var(--teal) 4px,
+    var(--teal-light) 4px,
+    var(--teal-light) 8px
+  );
+}
+
+.washi-blue {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--blue),
+    var(--blue) 4px,
+    var(--blue-light) 4px,
+    var(--blue-light) 8px
+  );
+}
+
+.washi-orange {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--orange),
+    var(--orange) 4px,
+    var(--orange-light) 4px,
+    var(--orange-light) 8px
+  );
+}
+
+/* Separador pontilhado do convite */
+.dotted-divider {
+  width: 1px;
+  height: 2rem;
+  border-left: 2px dotted var(--orange);
+}
