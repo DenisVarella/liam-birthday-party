@@ -45,6 +45,15 @@ body {
   font-family: var(--font-nunito), system-ui, sans-serif;
 }
 
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 ::selection {
   background: color-mix(in srgb, var(--coral) 30%, white);
   color: var(--foreground);

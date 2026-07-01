@@ -5,14 +5,17 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import {
   Calendar,
+  CalendarPlus,
   Check,
   Clock,
   Loader2,
   MapPin,
   PartyPopper,
+  Pencil,
   X,
 } from "lucide-react";
 import { eventInfo } from "@/lib/event-data";
+import { baixarEventoIcs } from "@/lib/calendar";
 import {
   getFamiliaPublica,
   registrarAcessoConvite,
@@ -20,32 +23,7 @@ import {
 } from "@/lib/convidados-service";
 import type { RespostaStatus } from "@/lib/types/convidados";
 import { StitchedHeart } from "@/components/ui/invitation-decor";
-
-/** Título "1º ANINHO DO" com tracking leve e cores alternadas. */
-function TituloAninhoConvite() {
-  const texto = "1º ANINHO DO";
-
-  return (
-    <p className="font-display text-lg font-bold tracking-[0.12em]">
-      {[...texto].map((char, index) => {
-        if (char === " ") {
-          return <span key={index}> </span>;
-        }
-
-        const visibleIndex = [...texto.slice(0, index)].filter((c) => c !== " ")
-          .length;
-        const colorClass =
-          visibleIndex % 2 === 0 ? "text-teal" : "text-orange";
-
-        return (
-          <span key={index} className={colorClass}>
-            {char}
-          </span>
-        );
-      })}
-    </p>
-  );
-}
+import { TituloAninho } from "@/components/ui/titulo-aninho";
 
 /** Página de confirmação de presença — link único por família. */
 export function ConfirmarPresenca() {
@@ -126,7 +104,7 @@ export function ConfirmarPresenca() {
             <PartyPopper className="h-4 w-4" />
             Você está convidado!
           </div>
-          <TituloAninhoConvite />
+          <TituloAninho className="text-lg" />
           <h1 className="font-script text-5xl text-blue">
             {eventInfo.childName}
             <StitchedHeart
@@ -210,6 +188,14 @@ export function ConfirmarPresenca() {
                   <p className="mt-2 text-sm text-foreground/60">
                     Obrigado! Nos vemos na festa do {eventInfo.childName}! 🎉
                   </p>
+                  <button
+                    type="button"
+                    onClick={baixarEventoIcs}
+                    className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal px-8 py-4 font-bold text-white shadow-lg shadow-teal/20 transition-opacity hover:opacity-90"
+                  >
+                    <CalendarPlus className="h-5 w-5" />
+                    Adicionar à agenda
+                  </button>
                 </>
               ) : status === "recusado" ? (
                 <>
@@ -222,6 +208,17 @@ export function ConfirmarPresenca() {
                   <p className="mt-2 text-sm text-foreground/60">
                     Sentiremos sua falta! Obrigado por avisar. 💙
                   </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setStatus("pendente");
+                      setError(null);
+                    }}
+                    className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-panel bg-white px-8 py-4 font-bold text-blue transition-colors hover:border-blue hover:bg-blue-soft"
+                  >
+                    <Pencil className="h-4 w-4" />
+                    Mudei de ideia, quero comparecer
+                  </button>
                 </>
               ) : (
                 <>

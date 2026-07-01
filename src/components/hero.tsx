@@ -9,6 +9,7 @@ import {
   RibbonBanner,
   StitchedHeart,
 } from "@/components/ui/invitation-decor";
+import { TituloAninho } from "@/components/ui/titulo-aninho";
 
 /** Hero inspirado no layout do convite — balões, script "Liam", fita e detalhes. */
 export function Hero() {
@@ -20,18 +21,7 @@ export function Hero() {
       <div className="relative mx-auto w-full max-w-4xl px-4 py-12 text-center sm:px-6 sm:py-16">
         {/* Título estilo convite: 1º ANINHO DO Liam */}
         <FadeIn>
-          <p className="font-display text-2xl font-bold tracking-wide sm:text-3xl">
-            <span className="text-teal">1º</span>{" "}
-            <span className="text-orange">A</span>
-            <span className="text-teal">N</span>
-            <span className="text-orange">I</span>
-            <span className="text-teal">N</span>
-            <span className="text-orange">H</span>
-            <span className="text-teal">O</span>
-          </p>
-          <p className="mt-1 text-sm font-semibold uppercase tracking-[0.3em] text-blue">
-            do
-          </p>
+          <TituloAninho className="text-2xl sm:text-3xl" />
         </FadeIn>
 
         <FadeIn delay={0.1}>
