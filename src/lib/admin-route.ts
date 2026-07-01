@@ -1,7 +1,7 @@
 /**
  * Rotas internas — não linkar na landing page pública.
  */
-export const CADASTRO_CONVIDADOS_PATH = "/pv-registro-familias-7x2k";
+export const CADASTRO_CONVIDADOS_PATH = "/cadastro-familias";
 export const CONFIRMAR_PRESENCA_PATH = "/confirmar";
 
 /** Monta o link de confirmação de presença para enviar via WhatsApp. */

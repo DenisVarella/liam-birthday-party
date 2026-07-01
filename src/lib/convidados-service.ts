@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -12,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import type {
+  AtualizarFamiliaInput,
   FamiliaConvidada,
   FamiliaPublica,
   NovaFamiliaInput,
@@ -92,6 +94,67 @@ export async function cadastrarFamilia(
   });
 
   return docRef.id;
+}
+
+function buildMembrosFromNomes(
+  nomesMembros: string[],
+  membrosAtuais: { nome: string; confirmado: boolean }[] = [],
+): FamiliaConvidada["membros"] {
+  const nomes = nomesMembros.map((nome) => nome.trim()).filter(Boolean);
+
+  if (nomes.length === 0) {
+    throw new Error("Adicione pelo menos um membro à família.");
+  }
+
+  const confirmadoPorNome = new Map(
+    membrosAtuais.map((membro) => [
+      membro.nome.trim().toLowerCase(),
+      membro.confirmado,
+    ]),
+  );
+
+  return nomes.map((nome) => ({
+    nome,
+    confirmado: confirmadoPorNome.get(nome.toLowerCase()) ?? false,
+  }));
+}
+
+/** Atualiza nome da família e lista de membros (preserva confirmação por nome). */
+export async function atualizarFamilia(
+  familiaId: string,
+  input: AtualizarFamiliaInput,
+): Promise<void> {
+  const ref = doc(db, COLLECTION, familiaId);
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) {
+    throw new Error("Família não encontrada.");
+  }
+
+  const data = snap.data();
+  const membrosAtuais = Array.isArray(data.membros)
+    ? data.membros.map((m: { nome?: string; confirmado?: boolean }) => ({
+        nome: String(m.nome ?? ""),
+        confirmado: Boolean(m.confirmado),
+      }))
+    : [];
+
+  await updateDoc(ref, {
+    nomeFamilia: input.nomeFamilia.trim(),
+    membros: buildMembrosFromNomes(input.nomesMembros, membrosAtuais),
+  });
+}
+
+/** Remove o cadastro de uma família. */
+export async function removerFamilia(familiaId: string): Promise<void> {
+  const ref = doc(db, COLLECTION, familiaId);
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) {
+    throw new Error("Família não encontrada.");
+  }
+
+  await deleteDoc(ref);
 }
 
 /** Busca família pelo ID — retorna apenas se o convite é válido e o status. */

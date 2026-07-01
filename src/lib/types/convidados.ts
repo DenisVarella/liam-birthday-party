@@ -35,3 +35,9 @@ export interface NovaFamiliaInput {
   nomeFamilia: string;
   nomesMembros: string[];
 }
+
+/** Payload para atualizar uma família existente. */
+export interface AtualizarFamiliaInput {
+  nomeFamilia: string;
+  nomesMembros: string[];
+}

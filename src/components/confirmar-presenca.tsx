@@ -126,24 +126,36 @@ export function ConfirmarPresenca() {
             />
           </div>
 
-          <p className="mt-4 text-sm text-foreground/60">
-            Confirme sua presença na festa
-          </p>
         </header>
 
-        <div className="mb-6 flex flex-wrap justify-center gap-4 text-sm text-blue">
-          <span className="inline-flex items-center gap-1.5">
-            <Calendar className="h-4 w-4 text-orange" />
-            16/08/26
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <Clock className="h-4 w-4 text-teal" />
-            {eventInfo.time}
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <MapPin className="h-4 w-4 text-coral" />
-            Guarulhos-SP
-          </span>
+        <div className="mb-6 space-y-4">
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-blue">
+            <span className="inline-flex items-center gap-1.5">
+              <Calendar className="h-4 w-4 text-orange" />
+              {eventInfo.weekday}, {eventInfo.dateShort}
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <Clock className="h-4 w-4 text-teal" />
+              {eventInfo.time}
+            </span>
+          </div>
+
+          <a
+            href={eventInfo.location.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mx-auto flex max-w-sm items-start justify-center gap-2 text-sm text-blue transition-opacity hover:opacity-80"
+          >
+            <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-coral" />
+            <span className="text-left leading-relaxed">
+              {eventInfo.location.address}, {eventInfo.location.neighborhood},{" "}
+              {eventInfo.location.city}-{eventInfo.location.state}
+              <br />
+              <span className="text-foreground/60">
+                ({eventInfo.location.name})
+              </span>
+            </span>
+          </a>
         </div>
 
         <div className="rounded-3xl border border-panel bg-white/90 p-6 shadow-lg backdrop-blur-sm">
@@ -184,7 +196,7 @@ export function ConfirmarPresenca() {
               ) : (
                 <>
                   <p className="mb-5 text-sm leading-relaxed text-foreground/70">
-                    Venha comemorar conosco, adoraríamos ter você nesse
+                    Venha comemorar conosco, adoraríamos<br/>ter você nesse
                     dia tão especial!
                   </p>
 

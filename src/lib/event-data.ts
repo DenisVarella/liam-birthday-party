@@ -9,6 +9,8 @@ export const eventInfo = {
   title: "1º Aninho do Liam",
   tagline: "Um dia cheio de alegria, carinho e boas lembranças",
   date: "16 de agosto de 2026",
+  weekday: "Domingo",
+  dateShort: "16/08/26",
   dateISO: "2026-08-16T14:00:00-03:00",
   time: "14h",
   location: {
