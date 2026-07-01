@@ -5,6 +5,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  increment,
   orderBy,
   query,
   serverTimestamp,
@@ -13,6 +14,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import type {
+  AcessoConvite,
   AtualizarFamiliaInput,
   FamiliaConvidada,
   FamiliaPublica,
@@ -22,6 +24,7 @@ import type {
 } from "@/lib/types/convidados";
 
 const COLLECTION = "convidados";
+const ACESSOS_SUBCOLLECTION = "acessos";
 
 function parseStatus(
   data: Record<string, unknown>,
@@ -46,6 +49,7 @@ function parseStatus(
 function mapDoc(id: string, data: Record<string, unknown>): FamiliaConvidada {
   const criadoEm = data.criadoEm;
   const respondidoEm = data.respondidoEm;
+  const ultimoAcessoEm = data.ultimoAcessoEm;
   const membros = Array.isArray(data.membros)
     ? data.membros.map((m: { nome?: string; confirmado?: boolean }) => ({
         nome: String(m.nome ?? ""),
@@ -62,6 +66,10 @@ function mapDoc(id: string, data: Record<string, unknown>): FamiliaConvidada {
     criadoEm: criadoEm instanceof Timestamp ? criadoEm.toDate() : undefined,
     respondidoEm:
       respondidoEm instanceof Timestamp ? respondidoEm.toDate() : undefined,
+    totalAcessos:
+      typeof data.totalAcessos === "number" ? data.totalAcessos : 0,
+    ultimoAcessoEm:
+      ultimoAcessoEm instanceof Timestamp ? ultimoAcessoEm.toDate() : undefined,
   };
 }
 
@@ -166,6 +174,43 @@ export async function getFamiliaPublica(
 
   const data = mapDoc(snap.id, snap.data());
   return { id: data.id!, status: data.status };
+}
+
+/** Registra abertura do link do convite (subcoleção + contadores no documento pai). */
+export async function registrarAcessoConvite(familiaId: string): Promise<void> {
+  const ref = doc(db, COLLECTION, familiaId);
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) return;
+
+  await addDoc(collection(ref, ACESSOS_SUBCOLLECTION), {
+    acessadoEm: serverTimestamp(),
+  });
+
+  await updateDoc(ref, {
+    totalAcessos: increment(1),
+    ultimoAcessoEm: serverTimestamp(),
+  });
+}
+
+/** Lista histórico de acessos ao convite — mais recentes primeiro. */
+export async function listarAcessosConvite(
+  familiaId: string,
+): Promise<AcessoConvite[]> {
+  const ref = doc(db, COLLECTION, familiaId);
+  const q = query(
+    collection(ref, ACESSOS_SUBCOLLECTION),
+    orderBy("acessadoEm", "desc"),
+  );
+  const snapshot = await getDocs(q);
+
+  return snapshot.docs.map((acessoDoc) => {
+    const acessadoEm = acessoDoc.data().acessadoEm;
+    return {
+      id: acessoDoc.id,
+      acessadoEm: acessadoEm instanceof Timestamp ? acessadoEm.toDate() : new Date(),
+    };
+  });
 }
 
 /** Responde ao convite — confirma ou recusa presença de toda a família. */

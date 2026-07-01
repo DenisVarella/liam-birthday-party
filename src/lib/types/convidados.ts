@@ -16,6 +16,14 @@ export interface FamiliaConvidada {
   mensagem?: string;
   criadoEm?: Date;
   respondidoEm?: Date;
+  totalAcessos?: number;
+  ultimoAcessoEm?: Date;
+}
+
+/** Registro de abertura do link do convite. */
+export interface AcessoConvite {
+  id?: string;
+  acessadoEm: Date;
 }
 
 /** Dados públicos da família — sem nomes nem nomeFamilia. */

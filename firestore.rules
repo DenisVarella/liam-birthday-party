@@ -6,6 +6,10 @@ service cloud.firestore {
     // TODO: restringir com Auth ou Cloud Functions antes do evento ir ao ar
     match /convidados/{familiaId} {
       allow read, write: if true;
+
+      match /acessos/{acessoId} {
+        allow read, write: if true;
+      }
     }
 
     match /{document=**} {

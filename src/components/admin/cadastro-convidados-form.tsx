@@ -16,11 +16,25 @@ import {
 import {
   atualizarFamilia,
   cadastrarFamilia,
+  listarAcessosConvite,
   listarFamilias,
   removerFamilia,
 } from "@/lib/convidados-service";
 import { buildLinkConfirmacao } from "@/lib/admin-route";
-import type { FamiliaConvidada, RespostaStatus } from "@/lib/types/convidados";
+import type { AcessoConvite, FamiliaConvidada, RespostaStatus } from "@/lib/types/convidados";
+
+const formatadorDataHora = new Intl.DateTimeFormat("pt-BR", {
+  timeZone: "America/Sao_Paulo",
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+});
+
+function formatarDataHora(date: Date): string {
+  return formatadorDataHora.format(date);
+}
 
 function StatusBadge({ status }: { status: RespostaStatus }) {
   const styles = {
@@ -208,6 +222,99 @@ function FamiliaFormFields({
   );
 }
 
+function ResumoAcessos({ familia }: { familia: FamiliaConvidada }) {
+  const total = familia.totalAcessos ?? 0;
+
+  if (total === 0) {
+    return (
+      <p className="mt-2 text-xs text-foreground/45">Nunca acessou o convite</p>
+    );
+  }
+
+  const ultimo = familia.ultimoAcessoEm
+    ? formatarDataHora(familia.ultimoAcessoEm)
+    : "—";
+
+  return (
+    <p className="mt-2 text-xs text-foreground/55">
+      {total === 1 ? "1 acesso" : `${total} acessos`} · último em {ultimo}
+    </p>
+  );
+}
+
+function HistoricoAcessos({
+  familiaId,
+  totalAcessos,
+}: {
+  familiaId: string;
+  totalAcessos: number;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const [acessos, setAcessos] = useState<AcessoConvite[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  async function toggleHistorico() {
+    if (expanded) {
+      setExpanded(false);
+      return;
+    }
+
+    setExpanded(true);
+
+    if (acessos.length > 0) return;
+
+    setLoading(true);
+    setError(false);
+
+    try {
+      const lista = await listarAcessosConvite(familiaId);
+      setAcessos(lista);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (totalAcessos === 0) return null;
+
+  return (
+    <div className="mt-1">
+      <button
+        type="button"
+        onClick={toggleHistorico}
+        className="text-xs font-semibold text-blue transition-colors hover:text-blue/80"
+      >
+        {expanded ? "Ocultar histórico" : "Ver histórico"}
+      </button>
+
+      {expanded && (
+        <div className="mt-2 rounded-xl bg-white/70 px-3 py-2">
+          {loading ? (
+            <div className="flex justify-center py-2">
+              <Loader2 className="h-4 w-4 animate-spin text-blue" />
+            </div>
+          ) : error ? (
+            <p className="text-xs text-coral">Erro ao carregar histórico.</p>
+          ) : (
+            <ul className="max-h-40 space-y-1 overflow-y-auto">
+              {acessos.map((acesso) => (
+                <li
+                  key={acesso.id}
+                  className="text-xs text-foreground/60 tabular-nums"
+                >
+                  {formatarDataHora(acesso.acessadoEm)}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 interface FamiliaItemProps {
   familia: FamiliaConvidada;
   isEditing: boolean;
@@ -326,6 +433,14 @@ function FamiliaItem({
             </li>
           ))}
         </ul>
+
+        <ResumoAcessos familia={familia} />
+        {familia.id && (
+          <HistoricoAcessos
+            familiaId={familia.id}
+            totalAcessos={familia.totalAcessos ?? 0}
+          />
+        )}
       </div>
 
       <div className="flex w-[7rem] shrink-0 flex-col gap-2 pt-1">

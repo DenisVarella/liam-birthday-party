@@ -15,10 +15,37 @@ import {
 import { eventInfo } from "@/lib/event-data";
 import {
   getFamiliaPublica,
+  registrarAcessoConvite,
   responderConvite,
 } from "@/lib/convidados-service";
 import type { RespostaStatus } from "@/lib/types/convidados";
 import { StitchedHeart } from "@/components/ui/invitation-decor";
+
+/** Título "1º ANINHO DO" com tracking leve e cores alternadas. */
+function TituloAninhoConvite() {
+  const texto = "1º ANINHO DO";
+
+  return (
+    <p className="font-display text-lg font-bold tracking-[0.12em]">
+      {[...texto].map((char, index) => {
+        if (char === " ") {
+          return <span key={index}> </span>;
+        }
+
+        const visibleIndex = [...texto.slice(0, index)].filter((c) => c !== " ")
+          .length;
+        const colorClass =
+          visibleIndex % 2 === 0 ? "text-teal" : "text-orange";
+
+        return (
+          <span key={index} className={colorClass}>
+            {char}
+          </span>
+        );
+      })}
+    </p>
+  );
+}
 
 /** Página de confirmação de presença — link único por família. */
 export function ConfirmarPresenca() {
@@ -52,6 +79,9 @@ export function ConfirmarPresenca() {
           setConviteValido(true);
           setStatus(data.status);
           setError(null);
+          void registrarAcessoConvite(familiaId).catch(() => {
+            /* não bloqueia a tela do convite */
+          });
         }
       })
       .catch(() => {
@@ -96,7 +126,7 @@ export function ConfirmarPresenca() {
             <PartyPopper className="h-4 w-4" />
             Você está convidado!
           </div>
-          <p className="font-display text-lg font-bold text-teal">1º ANINHO DO</p>
+          <TituloAninhoConvite />
           <h1 className="font-script text-5xl text-blue">
             {eventInfo.childName}
             <StitchedHeart
