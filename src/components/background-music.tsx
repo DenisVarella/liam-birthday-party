@@ -66,6 +66,7 @@ function loadYouTubeAPI(): Promise<void> {
  */
 export function BackgroundMusic() {
   const playerRef = useRef<YTPlayer | null>(null);
+  const blockAutoUnmuteRef = useRef(false);
   const [ready, setReady] = useState(false);
   const [audible, setAudible] = useState(false);
 
@@ -120,7 +121,7 @@ export function BackgroundMusic() {
   }, []);
 
   useEffect(() => {
-    if (!ready || audible) return;
+    if (!ready || audible || blockAutoUnmuteRef.current) return;
 
     const onFirstInteraction = () => {
       enableSound();
@@ -135,7 +136,9 @@ export function BackgroundMusic() {
     };
   }, [ready, audible, enableSound]);
 
-  const toggleMute = () => {
+  const toggleMute = (event: React.MouseEvent) => {
+    event.stopPropagation();
+
     const player = playerRef.current;
     if (!player) return;
 
@@ -146,6 +149,7 @@ export function BackgroundMusic() {
 
     player.mute();
     setAudible(false);
+    blockAutoUnmuteRef.current = true;
   };
 
   return (
