@@ -8,12 +8,15 @@ import { EntertainmentSection } from "@/components/entertainment-section";
 import { ShareSection } from "@/components/share-section";
 import { Footer } from "@/components/footer";
 import { BackgroundMusic } from "@/components/background-music";
+import { PaginaEmConstrucao } from "@/components/ui/pagina-em-construcao";
 import { BalloonBackground, PageDecorBackground } from "@/components/ui/invitation-decor";
 
 /** Landing page do 1º Aninho do Liam. */
 export default function Home() {
   return (
-    <>
+    <PaginaEmConstrucao
+      descricao="Em breve você poderá conferir todos os detalhes da festa por aqui. Use o link do seu convite para confirmar presença."
+    >
       <BackgroundMusic />
       <PageDecorBackground />
       <BalloonBackground />
@@ -28,6 +31,6 @@ export default function Home() {
         <ShareSection />
       </main>
       <Footer className="relative z-10" />
-    </>
+    </PaginaEmConstrucao>
   );
 }

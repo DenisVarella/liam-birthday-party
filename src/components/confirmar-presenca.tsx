@@ -23,6 +23,7 @@ import {
 } from "@/lib/convidados-service";
 import type { RespostaStatus } from "@/lib/types/convidados";
 import { StitchedHeart } from "@/components/ui/invitation-decor";
+import { PaginaEmConstrucao } from "@/components/ui/pagina-em-construcao";
 import { TituloAninho } from "@/components/ui/titulo-aninho";
 
 /** Página de confirmação de presença — link único por família. */
@@ -38,9 +39,8 @@ export function ConfirmarPresenca() {
   const [enviando, setEnviando] = useState<"confirmado" | "recusado" | null>(
     null,
   );
-  const [error, setError] = useState<string | null>(
-    linkInvalido ? "Link inválido." : null,
-  );
+  const [error, setError] = useState<string | null>(null);
+  const semConvite = linkInvalido;
 
   useEffect(() => {
     if (!familiaId) return;
@@ -97,8 +97,9 @@ export function ConfirmarPresenca() {
   }
 
   return (
-    <div className="relative z-10 min-h-screen px-4 py-10 sm:px-6">
-      <div className="mx-auto max-w-md">
+    <PaginaEmConstrucao ativa={semConvite}>
+      <div className="relative z-10 min-h-screen px-4 py-10 sm:px-6">
+        <div className="mx-auto max-w-md">
         <header className="mb-8 text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-sm font-semibold text-orange shadow-sm">
             <PartyPopper className="h-4 w-4" />
@@ -291,7 +292,8 @@ export function ConfirmarPresenca() {
             </div>
           ) : null}
         </div>
+        </div>
       </div>
-    </div>
+    </PaginaEmConstrucao>
   );
 }
