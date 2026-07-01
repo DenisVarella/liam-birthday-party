@@ -2,6 +2,7 @@ import {
   addDoc,
   collection,
   deleteDoc,
+  deleteField,
   doc,
   getDoc,
   getDocs,
@@ -50,6 +51,7 @@ function mapDoc(id: string, data: Record<string, unknown>): FamiliaConvidada {
   const criadoEm = data.criadoEm;
   const respondidoEm = data.respondidoEm;
   const ultimoAcessoEm = data.ultimoAcessoEm;
+  const conviteEnviadoEm = data.conviteEnviadoEm;
   const membros = Array.isArray(data.membros)
     ? data.membros.map((m: { nome?: string; confirmado?: boolean }) => ({
         nome: String(m.nome ?? ""),
@@ -70,6 +72,11 @@ function mapDoc(id: string, data: Record<string, unknown>): FamiliaConvidada {
       typeof data.totalAcessos === "number" ? data.totalAcessos : 0,
     ultimoAcessoEm:
       ultimoAcessoEm instanceof Timestamp ? ultimoAcessoEm.toDate() : undefined,
+    conviteEnviado: Boolean(data.conviteEnviado),
+    conviteEnviadoEm:
+      conviteEnviadoEm instanceof Timestamp
+        ? conviteEnviadoEm.toDate()
+        : undefined,
   };
 }
 
@@ -98,6 +105,7 @@ export async function cadastrarFamilia(
     nomeFamilia: input.nomeFamilia.trim(),
     membros,
     status: "pendente",
+    conviteEnviado: false,
     criadoEm: serverTimestamp(),
   });
 
@@ -210,6 +218,24 @@ export async function listarAcessosConvite(
       id: acessoDoc.id,
       acessadoEm: acessadoEm instanceof Timestamp ? acessadoEm.toDate() : new Date(),
     };
+  });
+}
+
+/** Marca ou desmarca que o convite foi enviado à família. */
+export async function marcarConviteEnviado(
+  familiaId: string,
+  enviado: boolean,
+): Promise<void> {
+  const ref = doc(db, COLLECTION, familiaId);
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) {
+    throw new Error("Família não encontrada.");
+  }
+
+  await updateDoc(ref, {
+    conviteEnviado: enviado,
+    conviteEnviadoEm: enviado ? serverTimestamp() : deleteField(),
   });
 }
 

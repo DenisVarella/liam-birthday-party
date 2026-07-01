@@ -8,6 +8,7 @@ import {
   Loader2,
   Pencil,
   Plus,
+  Send,
   Trash2,
   UserX,
   Users,
@@ -18,6 +19,7 @@ import {
   cadastrarFamilia,
   listarAcessosConvite,
   listarFamilias,
+  marcarConviteEnviado,
   removerFamilia,
 } from "@/lib/convidados-service";
 import { buildLinkConfirmacao } from "@/lib/admin-route";
@@ -71,17 +73,60 @@ function CopiarUrlButton({ familiaId }: { familiaId: string }) {
     <button
       type="button"
       onClick={copiar}
-      className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-panel bg-white px-3 py-1.5 text-xs font-semibold text-blue transition-colors hover:bg-blue-soft"
+      title="Copiar URL do convite"
+      className="inline-flex w-full items-center justify-center gap-1 rounded-lg border border-panel bg-white px-2 py-1.5 text-[11px] font-semibold text-blue transition-colors hover:bg-blue-soft"
     >
       {copied ? (
         <>
-          <Check className="h-3.5 w-3.5 text-teal" />
+          <Check className="h-3.5 w-3.5 shrink-0 text-teal" />
           Copiado!
         </>
       ) : (
         <>
-          <Copy className="h-3.5 w-3.5" />
-          Copiar URL
+          <Copy className="h-3.5 w-3.5 shrink-0" />
+          URL
+        </>
+      )}
+    </button>
+  );
+}
+
+function MarcarConvidadoButton({
+  conviteEnviado,
+  loading,
+  onToggle,
+}: {
+  conviteEnviado: boolean;
+  loading: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      disabled={loading}
+      className={`inline-flex w-full items-center justify-center gap-1 rounded-lg border px-2 py-1.5 text-[11px] font-semibold transition-colors disabled:opacity-50 ${
+        conviteEnviado
+          ? "border-teal/30 bg-teal-light/40 text-teal hover:bg-teal-light/60"
+          : "border-panel bg-white text-foreground/70 hover:bg-orange-light/30 hover:text-orange"
+      }`}
+      title={
+        conviteEnviado
+          ? "Convite marcado como enviado — clique para desmarcar"
+          : "Marcar convite como enviado"
+      }
+    >
+      {loading ? (
+        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+      ) : conviteEnviado ? (
+        <>
+          <Check className="h-3.5 w-3.5" />
+          Enviado
+        </>
+      ) : (
+        <>
+          <Send className="h-3.5 w-3.5" />
+          Convidado
         </>
       )}
     </button>
@@ -322,10 +367,12 @@ interface FamiliaItemProps {
   editMembros: string[];
   saving: boolean;
   removing: boolean;
+  markingConvite: boolean;
   onStartEdit: () => void;
   onCancelEdit: () => void;
   onSaveEdit: () => void;
   onRemove: () => void;
+  onToggleConviteEnviado: () => void;
   onEditNomeFamiliaChange: (value: string) => void;
   onEditMembroChange: (index: number, value: string) => void;
   onAdicionarEditMembro: () => void;
@@ -339,10 +386,12 @@ function FamiliaItem({
   editMembros,
   saving,
   removing,
+  markingConvite,
   onStartEdit,
   onCancelEdit,
   onSaveEdit,
   onRemove,
+  onToggleConviteEnviado,
   onEditNomeFamiliaChange,
   onEditMembroChange,
   onAdicionarEditMembro,
@@ -395,41 +444,33 @@ function FamiliaItem({
   }
 
   return (
-    <li className="flex items-start gap-3">
-      <div className="min-w-0 flex-1 rounded-2xl border border-panel bg-cream/50 p-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <p className="font-display font-bold text-foreground">{familia.nomeFamilia}</p>
+    <li className="flex items-start gap-2">
+      <div className="min-w-0 flex-1 rounded-xl border border-panel bg-cream/50 p-3">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <p className="font-display text-sm font-bold text-foreground">
+            {familia.nomeFamilia}
+          </p>
           <StatusBadge status={familia.status} />
+          {familia.conviteEnviado && (
+            <span className="rounded-full bg-blue-soft px-2 py-0.5 text-[10px] font-semibold text-blue">
+              Enviado
+            </span>
+          )}
         </div>
 
         {familia.mensagem && (
-          <p className="mt-2 rounded-xl bg-white/60 px-3 py-2 text-sm italic text-foreground/65">
+          <p className="mt-1.5 rounded-lg bg-white/60 px-2 py-1.5 text-xs italic text-foreground/65">
             &ldquo;{familia.mensagem}&rdquo;
           </p>
         )}
 
-        <ul className="mt-2 space-y-1">
+        <ul className="mt-1.5 space-y-0.5">
           {familia.membros.map((membro, i) => (
-            <li
-              key={i}
-              className="flex items-center justify-between text-sm text-foreground/70"
-            >
-              <span>{membro.nome}</span>
-              <span
-                className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
-                  membro.confirmado
-                    ? "bg-teal-light/50 text-teal"
-                    : familia.status === "recusado"
-                      ? "bg-coral-light/40 text-coral"
-                      : "bg-orange-light/40 text-orange"
-                }`}
-              >
-                {membro.confirmado
-                  ? "Confirmado"
-                  : familia.status === "recusado"
-                    ? "—"
-                    : "Pendente"}
-              </span>
+            <li key={i} className="text-xs text-foreground/70">
+              {membro.nome}
+              {membro.confirmado && (
+                <span className="ml-1.5 font-semibold text-teal">✓</span>
+              )}
             </li>
           ))}
         </ul>
@@ -443,26 +484,33 @@ function FamiliaItem({
         )}
       </div>
 
-      <div className="flex w-[7rem] shrink-0 flex-col gap-2 pt-1">
+      <div className="grid w-[11.5rem] shrink-0 grid-cols-2 gap-1.5 self-start">
+        {familia.id && (
+          <MarcarConvidadoButton
+            conviteEnviado={Boolean(familia.conviteEnviado)}
+            loading={markingConvite}
+            onToggle={onToggleConviteEnviado}
+          />
+        )}
         {familia.id && <CopiarUrlButton familiaId={familia.id} />}
         <button
           type="button"
           onClick={onStartEdit}
-          className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-panel bg-white px-3 py-1.5 text-xs font-semibold text-foreground/70 transition-colors hover:bg-blue-soft hover:text-blue"
+          className="inline-flex w-full items-center justify-center gap-1 rounded-lg border border-panel bg-white px-2 py-1.5 text-[11px] font-semibold text-foreground/70 transition-colors hover:bg-blue-soft hover:text-blue"
         >
-          <Pencil className="h-3.5 w-3.5" />
+          <Pencil className="h-3.5 w-3.5 shrink-0" />
           Editar
         </button>
         <button
           type="button"
           onClick={onRemove}
           disabled={removing}
-          className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-panel bg-white px-3 py-1.5 text-xs font-semibold text-coral transition-colors hover:bg-coral-light/30 disabled:opacity-50"
+          className="inline-flex w-full items-center justify-center gap-1 rounded-lg border border-panel bg-white px-2 py-1.5 text-[11px] font-semibold text-coral transition-colors hover:bg-coral-light/30 disabled:opacity-50"
         >
           {removing ? (
-            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+            <Loader2 className="h-3.5 w-3.5 shrink-0 animate-spin" />
           ) : (
-            <Trash2 className="h-3.5 w-3.5" />
+            <Trash2 className="h-3.5 w-3.5 shrink-0" />
           )}
           Remover
         </button>
@@ -483,6 +531,7 @@ export function CadastroConvidadosForm() {
   const [editMembros, setEditMembros] = useState<string[]>([""]);
   const [savingEditId, setSavingEditId] = useState<string | null>(null);
   const [removingId, setRemovingId] = useState<string | null>(null);
+  const [markingConviteId, setMarkingConviteId] = useState<string | null>(null);
   const [showCadastroForm, setShowCadastroForm] = useState(false);
   const [message, setMessage] = useState<{
     type: "success" | "error";
@@ -659,6 +708,28 @@ export function CadastroConvidadosForm() {
     }
   }
 
+  async function handleToggleConviteEnviado(familia: FamiliaConvidada) {
+    if (!familia.id) return;
+
+    setMessage(null);
+    setMarkingConviteId(familia.id);
+
+    try {
+      await marcarConviteEnviado(familia.id, !familia.conviteEnviado);
+      await recarregarFamilias();
+    } catch (err) {
+      setMessage({
+        type: "error",
+        text:
+          err instanceof Error
+            ? err.message
+            : "Erro ao atualizar status do convite. Tente novamente.",
+      });
+    } finally {
+      setMarkingConviteId(null);
+    }
+  }
+
   const totalMembros = familias.reduce((acc, f) => acc + f.membros.length, 0);
   const kpis = calcularKpis(familias);
 
@@ -808,10 +879,12 @@ export function CadastroConvidadosForm() {
                 editMembros={editMembros}
                 saving={savingEditId === familia.id}
                 removing={removingId === familia.id}
+                markingConvite={markingConviteId === familia.id}
                 onStartEdit={() => iniciarEdicao(familia)}
                 onCancelEdit={cancelarEdicao}
                 onSaveEdit={() => familia.id && handleSaveEdit(familia.id)}
                 onRemove={() => handleRemove(familia)}
+                onToggleConviteEnviado={() => handleToggleConviteEnviado(familia)}
                 onEditNomeFamiliaChange={setEditNomeFamilia}
                 onEditMembroChange={atualizarEditMembro}
                 onAdicionarEditMembro={adicionarEditMembro}

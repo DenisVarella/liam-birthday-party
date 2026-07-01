@@ -18,6 +18,9 @@ export interface FamiliaConvidada {
   respondidoEm?: Date;
   totalAcessos?: number;
   ultimoAcessoEm?: Date;
+  /** Indica se o convite já foi enviado ao convidado (WhatsApp, etc.). */
+  conviteEnviado?: boolean;
+  conviteEnviadoEm?: Date;
 }
 
 /** Registro de abertura do link do convite. */
