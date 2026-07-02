@@ -104,6 +104,20 @@ export function buildWhatsAppConviteMessage(
   ].join("\n");
 }
 
+/** Mensagem personalizada de convite para envio no WhatsApp. */
+export function buildWhatsAppConvitePersonalizadoMessage(link: string): string {
+  return [
+    "Contagem regressiva para o *1º aninho do Liam!* 🦁🎉",
+    "",
+    "Vai ser no dia *16/08 (domingo), às 14h*, aqui no salão de festas do nosso condomínio. Ficaríamos muito felizes se você pudesse vir comemorar com a gente!",
+    "",
+    "👉 Clicando no link abaixo, você encontra o endereço certinho e já pode *confirmar sua presença*:",
+    link,
+    "",
+    "Nos vemos lá! ✨",
+  ].join("\n");
+}
+
 /** Link direto para abrir WhatsApp com a mensagem pré-preenchida. */
 export function buildWhatsAppShareUrl(
   link: string,

@@ -6,6 +6,7 @@ import {
   CheckCircle2,
   Copy,
   Loader2,
+  MessageCircle,
   Pencil,
   Plus,
   Send,
@@ -23,6 +24,10 @@ import {
   removerFamilia,
 } from "@/lib/convidados-service";
 import { buildLinkConfirmacao } from "@/lib/admin-route";
+import {
+  buildWhatsAppConvitePersonalizadoMessage,
+  getSiteUrl,
+} from "@/lib/site-metadata";
 import type { AcessoConvite, FamiliaConvidada, RespostaStatus } from "@/lib/types/convidados";
 
 const formatadorDataHora = new Intl.DateTimeFormat("pt-BR", {
@@ -85,6 +90,39 @@ function CopiarUrlButton({ familiaId }: { familiaId: string }) {
         <>
           <Copy className="h-3.5 w-3.5 shrink-0" />
           URL
+        </>
+      )}
+    </button>
+  );
+}
+
+function CopiarWhatsAppButton({ familiaId }: { familiaId: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function copiar() {
+    const link = buildLinkConfirmacao(familiaId, getSiteUrl());
+    const texto = buildWhatsAppConvitePersonalizadoMessage(link);
+    await navigator.clipboard.writeText(texto);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={copiar}
+      title="Copiar mensagem para WhatsApp"
+      className="col-span-2 inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-[#25D366] px-2 py-2 text-[11px] font-semibold text-white transition-opacity hover:opacity-90"
+    >
+      {copied ? (
+        <>
+          <Check className="h-3.5 w-3.5 shrink-0" />
+          Copiado!
+        </>
+      ) : (
+        <>
+          <MessageCircle className="h-3.5 w-3.5 shrink-0" />
+          WhatsApp
         </>
       )}
     </button>
@@ -485,6 +523,7 @@ function FamiliaItem({
       </div>
 
       <div className="grid w-[11.5rem] shrink-0 grid-cols-2 gap-1.5 self-start">
+        {familia.id && <CopiarWhatsAppButton familiaId={familia.id} />}
         {familia.id && (
           <MarcarConvidadoButton
             conviteEnviado={Boolean(familia.conviteEnviado)}
